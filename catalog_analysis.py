@@ -210,3 +210,27 @@ def print_high_rated(movies, min_rating=8.0):
 def total_duration_above_seven(movies):
     """Сумма длительностей рейтинга > 7 через генератор внутри sum."""
     return sum(movie["duration_min"] for movie in movies if movie["rating"] > 7)
+
+
+# Этап 9. Итоговый отчёт (задача 22).
+def build_report(movies):
+    """Вывести полный итоговый отчёт одним вызовом."""
+    print("ОТЧЁТ ПО КАТАЛОГУ")
+    print(f"Средний рейтинг: {average_rating(movies):.1f}")
+    print(f"Средний возраст фильмов: {catalog_age_stats(movies)[2]} лет")
+    print("\nТоп-3 фильма:")
+    for title, rating in top_n_by_rating(movies):
+        movie = next(
+            movie for movie in movies
+            if movie["title"] == title and movie["rating"] == rating
+        )
+        print(f"  {format_report_line(movie)}")
+    print("\nФильмов по жанрам:")
+    counts = count_by_genre(movies)
+    for genre, count in sorted(counts.items(), key=lambda item: -item[1]):
+        print(f"  {genre} – {count}")
+    print("\nВсе жанры каталога: " + ", ".join(sorted(all_genres(movies))))
+
+
+if __name__ == "__main__":
+    build_report(movies)
