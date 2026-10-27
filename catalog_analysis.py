@@ -143,3 +143,32 @@ def top_n_by_rating(movies, n=3):
     """Топ n пар (исходное название, рейтинг)."""
     ranked = sorted(movies, key=lambda movie: movie["rating"], reverse=True)
     return [(movie["title"], movie["rating"]) for movie in ranked[:max(0, n)]]
+
+
+# Этап 6. Словари (задачи 14–16).
+def count_by_genre(movies):
+    """Число фильмов каждого жанра через dict.get, без Counter."""
+    counts = {}
+    for movie in movies:
+        for genre in sorted(movie["genres"]):
+            counts[genre] = counts.get(genre, 0) + 1
+    return counts
+
+
+def actor_filmography(movies):
+    """Словарь актёр -> список исходных названий фильмов."""
+    filmography = {}
+    for movie in movies:
+        for actor in movie["actors"]:
+            filmography[actor] = filmography.get(actor, []) + [movie["title"]]
+    return filmography
+
+
+def ratings_above_average(movies):
+    """Словарь рейтингов выше среднего через dict comprehension."""
+    average = average_rating(movies)
+    return {
+        movie["title"]: movie["rating"]
+        for movie in movies
+        if movie["rating"] > average
+    }
