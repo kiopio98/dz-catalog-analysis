@@ -128,3 +128,18 @@ def format_report_line(movie):
         f'{movie["rating"]:.1f}/10, {duration_in_hours(movie["duration_min"])}, '
         f"жанры: {genres}"
     )
+
+
+# Этап 5. Списки (задачи 12–13).
+def titles_sorted_by_rating(movies):
+    """Названия по убыванию рейтинга, исходный каталог не изменяется."""
+    return [
+        movie["title"]
+        for movie in sorted(movies, key=lambda movie: movie["rating"], reverse=True)
+    ]
+
+
+def top_n_by_rating(movies, n=3):
+    """Топ n пар (исходное название, рейтинг)."""
+    ranked = sorted(movies, key=lambda movie: movie["rating"], reverse=True)
+    return [(movie["title"], movie["rating"]) for movie in ranked[:max(0, n)]]
